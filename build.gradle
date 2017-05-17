@@ -42,4 +42,4 @@ jar {
     }
 }
 
-defaultTasks 'clean', 'test', 'jacocoTestReport', 'build'
+defaultTasks 'clean', 'test', 'jacocoTestReport', 'build', 'jar'
