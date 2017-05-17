@@ -1,0 +1,45 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+version = '1.0'
+mainClassName = "io.stepinto.war.WarApplication"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "org.projectlombok:lombok:1.16.16"
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+    testCompile group: 'org.easymock', name: 'easymock', version: '3.4'
+}
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+test {
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/reports/jacocoHtml"
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.stepinto.war.WarApplication'
+    }
+}
+
+defaultTasks 'clean', 'test', 'jacocoTestReport', 'build'
